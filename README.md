@@ -57,7 +57,7 @@ Ensure that you have the following installed on your local machine:
 
 You can access the deployed app live here:
 
-[Event Calendar App - Live]()
+[Event Calendar App - Live]-(https://manage-event9.netlify.app/)
 
 ## Contributing
 
