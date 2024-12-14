@@ -3,7 +3,8 @@ export default {
     darkMode: ['class'],
     content: [
     './src/**/*.{js,jsx,ts,tsx}', 
-    // './node_modules/@shadcn/ui/**/*.{js,jsx,ts,tsx}', 
+    './node_modules/@shadcn/ui/**/*.{js,jsx,ts,tsx}', 
+	"./src/components/Calendar.jsx"
   ],
   theme: {
   	extend: {

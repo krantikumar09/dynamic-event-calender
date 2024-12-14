@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { v4 as uuidv4 } from "uuid";
 
+
 const EventModal = () => {
   const {
     selectedDay,
@@ -73,9 +74,13 @@ const EventModal = () => {
 
   return (
     showEventModal && (
-      <div className="event-modal">
-        <form onSubmit={handleSubmit}>
+      <div className="absolute top-0 left-0 z-10 w-full h-full bg-[#00000090] grid rounded-lg">
+        <form
+          onSubmit={handleSubmit}
+          className="place-self-center max-w-[360px] w-full text-[#808080] bg-white flex flex-col gap-4 py-6 px-7 text-base animation-fadeIn rounded-md"
+        >
           <Input
+            className="w-full text-black"
             type="text"
             placeholder="Enter event name"
             value={name}
@@ -83,31 +88,52 @@ const EventModal = () => {
             required
           />
           <Input
+            className="w-full text-black"
             type="time"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
             required
           />
           <Input
+            className="w-full text-black"
             type="time"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
             required
           />
           <Input
+            className="w-full text-black"
             type="text"
             placeholder="Event description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <select onChange={(e) => setCategory(e.target.value)} value={category}>
+
+          <select
+            className="w-full text-black border rounded-md py-2 px-3"
+            onChange={(e) => setCategory(e.target.value)}
+            value={category}
+          >
             {eventCategories.map((cat) => (
-              <option key={cat.name} value={cat.name} style={{ color: cat.color }}>
+              <option
+                key={cat.name}
+                value={cat.name}
+                style={{ color: cat.color }}
+              >
                 {cat.name}
               </option>
             ))}
           </select>
-          <Button type="submit">{eventToEdit ? "Update Event" : "Add Event"}</Button>
+
+          <div className="flex justify-end gap-4 mt-2">
+            <Button onClick={() => setShowEventModal(false)} variant="outline">
+              Cancel
+            </Button>
+
+            <Button type="submit">
+              {eventToEdit ? "Update Event" : "Add Event"}
+            </Button>
+          </div>
         </form>
       </div>
     )

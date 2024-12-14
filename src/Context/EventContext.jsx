@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { saveAs } from "file-saver";
 
 // Create a context for event data
 export const EventContext = createContext();
@@ -73,61 +73,7 @@ export const EventProvider = ({ children }) => {
     return eventsOnDay.length > 0 ? eventsOnDay[0].categoryColor : null;
   };
 
-  const exportEventsToJSON = () => {
-    const eventsForMonth = events.filter(
-      (event) =>
-        new Date(event.date).getMonth() === currentMonth.getMonth() &&
-        new Date(event.date).getFullYear() === currentMonth.getFullYear()
-    );
-    const blob = new Blob([JSON.stringify(eventsForMonth)], {
-      type: "application/json",
-    });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `events_${currentMonth.toLocaleString("default", {
-      month: "long",
-    })}.json`;
-    link.click();
-  };
-
-  const exportEventsToCSV = () => {
-    const eventsForMonth = events.filter(
-      (event) =>
-        new Date(event.date).getMonth() === currentMonth.getMonth() &&
-        new Date(event.date).getFullYear() === currentMonth.getFullYear()
-    );
-    const header = [
-      "ID",
-      "Name",
-      "Description",
-      "Start Time",
-      "End Time",
-      "Category",
-      "Date",
-    ];
-    const rows = eventsForMonth.map((event) => [
-      event.id,
-      event.name,
-      event.description,
-      event.startTime,
-      event.endTime,
-      event.category,
-      event.date,
-    ]);
-
-    let csvContent = header.join(",") + "\n";
-    rows.forEach((row) => {
-      csvContent += row.join(",") + "\n";
-    });
-
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `events_${currentMonth.toLocaleString("default", {
-      month: "long",
-    })}.csv`;
-    link.click();
-  };
+ 
 
   return (
     <EventContext.Provider
@@ -148,8 +94,6 @@ export const EventProvider = ({ children }) => {
         setEvents,
         eventCategories,
         getEventColorForDay,
-        exportEventsToJSON,
-        exportEventsToCSV,
       }}
     >
       {children}
